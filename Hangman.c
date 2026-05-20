@@ -1,11 +1,33 @@
 #include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
+void getword(char *filename, char *word) {
+    FILE *file = fopen(filename, "r");
+
+    int total = 0;
+    char temp[50];
+    while (fgets(temp, 50, file)) {
+        total++;
+    }
+    int chosen = rand() % total;
+    rewind(file);
+
+    for (int i = 0; i <= chosen; i++) {
+        fgets(word, 50, file);
+    }
+    word[strcspn(word, "\n")] = 0;
+
+    fclose(file);
+}
 int main(){
+    char word[50];
     int option = -1;
+    srand(time(NULL));
 
     while(option != 0){
-    printf("\nHangman started, let's play!\n");
+    printf("\n\nHangman started\n");
     printf("\nSelect an option:\n");
     printf("\n1 - Fruits\n");
     printf("2 - Objects of kitchen\n");
@@ -14,18 +36,20 @@ int main(){
 
     if (scanf("%d", &option) == 0){
         while(getchar() != '\n');
-        printf("\nInvalid input, please try again");
+        printf("\nInvalid input, please try again.\n");
         continue;
     }
 
     switch (option){
     case 1:
-        printf("\nYou select 'Fruits' let's play!");
-        FILE *Fruits = fopen("Fruits.txt", "r");
-        fclose(Fruits);
+        printf("\nYou select 'Fruits' let's play!\n");
+        getword("Fruits.txt", word);
+        for (int i = 0; i < strlen(word); i++){
+            printf("_ ");
+        }
         break;
     case 2:
-        printf("\n You select 'Objects of kitchen' lest's play!");
+        printf("\n You select 'Objects of kitchen' lest's play!\n");
         FILE *Objects = fopen("Objects.txt", "r");
         fclose(Objects);
         break;
