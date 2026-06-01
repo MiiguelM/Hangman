@@ -21,8 +21,12 @@ void getword(char *filename, char *word) {
 
     fclose(file);
 }
+
 int main(){
     char word[50];
+    char state[50];
+    char letter;
+    int lives = 5;
     int option = -1;
     srand(time(NULL));
 
@@ -44,9 +48,36 @@ int main(){
     case 1:
         printf("\nYou select 'Fruits' let's play!\n");
         getword("Fruits.txt", word);
+
+        for (int i = 0; i < strlen(word); i++){
+            state[i] = '_';
+        }
+        state[strlen(word)] = '\0';
+
         for (int i = 0; i < strlen(word); i++){
             printf("_ ");
         }
+        
+        lives = 5;
+        while (lives > 0 && strchr(state, '_')) {
+            printf("\nEnter one letter: ");
+            scanf(" %c", &letter);
+        
+            if (strchr(word, letter)) {
+                for (int i = 0; i < strlen(word); i++) {
+                    if (word[i] == letter) {
+                    state[i] = letter;
+                    }
+                }
+            } else {
+                lives--;
+                printf("\nWrong letter! Lives remaining: %d", lives);
+                if (lives == 0) {
+                    printf("\n\nYour lives are 0. Try again!");
+                }
+            }
+        }
+        
         break;
     case 2:
         printf("\n You select 'Objects of kitchen' lest's play!\n");
