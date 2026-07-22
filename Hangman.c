@@ -65,6 +65,7 @@ int main(){
         while (lives > 0 && strchr(state, '_')) {
             printf("\n\nEnter one letter: ");
             scanf(" %c", &letter);
+
             if (!isalpha(letter)) {
                 printf("Please enter a letter only!\n");
                 continue;
@@ -85,19 +86,23 @@ int main(){
                 }
             } else {
                 lives--;
-                }
             }
-                printf("\n%s\n", state);
-                printf("\n");
-                printf("\nLives: %d\n", lives);
-                printf("Tried: %s\n", tried);
+        }
+        printf("\n%s\n", state);
+        printf("\nLives: %d\n", lives);
+        printf("Tried: %s\n", tried);
 
-                if (lives == 0) {
-                    printf("\n Your lives are 0. Try again!");
-                }
-            }
+    }
 
-        break;
+    if (lives == 0) {
+        printf("\n Your lives are 0. Try again!");
+        printf("\nReturning to menu...\n");
+    } else {
+        printf("\n Congratulations! You guessed the word: %s\n", word);
+        printf("\nReturning to menu...");
+    }
+                      
+    break;
     case 2:
         printf("\n You select 'Objects of kitchen' lest's play!\n");
         FILE *Objects = fopen("Objects.txt", "r");
