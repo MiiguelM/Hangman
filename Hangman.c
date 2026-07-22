@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <ctype.h>
 
 void getword(char *filename, char *word) {
     FILE *file = fopen(filename, "r");
@@ -28,6 +29,7 @@ int main(){
     char letter;
     int lives = 5;
     int option = -1;
+    char tried[27] = "";
     srand(time(NULL));
 
     while(option != 0){
@@ -59,25 +61,42 @@ int main(){
         }
         
         lives = 5;
+        tried[0] = '\0';
         while (lives > 0 && strchr(state, '_')) {
-            printf("\nEnter one letter: ");
+            printf("\n\nEnter one letter: ");
             scanf(" %c", &letter);
-        
+            if (!isalpha(letter)) {
+                printf("Please enter a letter only!\n");
+                continue;
+            }
+
+            if (strchr(tried, letter)) {
+                printf("You already tried this letter!\n");
+            } else {
+                int len = strlen(tried);
+                tried[len] = letter;
+                tried[len + 1] = '\0';
+            
             if (strchr(word, letter)) {
                 for (int i = 0; i < strlen(word); i++) {
                     if (word[i] == letter) {
-                    state[i] = letter;
+                        state[i] = letter;
                     }
                 }
             } else {
                 lives--;
-                printf("\nWrong letter! Lives remaining: %d", lives);
-                if (lives == 0) {
-                    printf("\n\nYour lives are 0. Try again!");
                 }
             }
-        }
-        
+                printf("\n%s\n", state);
+                printf("\n");
+                printf("\nLives: %d\n", lives);
+                printf("Tried: %s\n", tried);
+
+                if (lives == 0) {
+                    printf("\n Your lives are 0. Try again!");
+                }
+            }
+
         break;
     case 2:
         printf("\n You select 'Objects of kitchen' lest's play!\n");
