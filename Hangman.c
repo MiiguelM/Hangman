@@ -95,18 +95,65 @@ int main(){
     }
 
     if (lives == 0) {
-        printf("\n Your lives are 0. Try again!");
-        printf("\nReturning to menu...\n");
+        printf("\nYour lives are 0. Try again!\nReturning to menu...\n");
     } else {
-        printf("\n Congratulations! You guessed the word: %s\n", word);
-        printf("\nReturning to menu...");
+        printf("\nCongratulations! You guessed the word: %s\nReturning to menu...", word);
     }
                       
     break;
     case 2:
         printf("\n You select 'Objects of kitchen' lest's play!\n");
-        FILE *Objects = fopen("Objects.txt", "r");
-        fclose(Objects);
+        getword("Objects.txt", word);
+        
+        for (int i = 0; i < strlen(word); i++){
+            state[i] = '_';
+        }
+
+        state[strlen(word)] = '\0';
+
+        for (int i = 0; i < strlen(word); i++){
+            printf("_ ");
+        }
+
+        lives = 5;
+        tried[0] = '\0';
+        while (lives > 0 && strchr(state, '_')){
+            printf("\nEnter one letter: ");
+            scanf(" %c", &letter);
+
+            if (!isalpha(letter)){
+                printf("Please enter a letter only!\n");
+                continue;
+            }
+
+            if (strchr(tried, letter)){
+                printf("You already tried this letter!\n");
+            } else {
+                int len = strlen(tried);
+                tried[len] = letter;
+                tried[len + 1] = '\0'; 
+            
+             if (strchr(word, letter)){
+                for (int i = 0; i < strlen(word); i++){
+                    if (word[i] == letter ){
+                        state[i] = letter;
+                    }
+                }
+             } else {
+                lives--;
+             }
+            } 
+            printf("\n%s\n", state);
+            printf("\nLives: %d\n", lives);
+            printf("Tried: %s\n", tried);
+        }
+        
+        if (lives == 0){
+            printf("\nYour lives are 0. Try again!\nReturning to menu...\n");
+        } else{
+            printf("\nCongratulations! You guessed the word: %s\nReturning to menu...\n", word);
+        }
+        
         break;
     case 0:
         printf("\nExiting...");
