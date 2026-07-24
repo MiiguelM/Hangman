@@ -1,4 +1,4 @@
-# 🪢 Hangman in C
+# 🎯 Hangman in C
 
 > A terminal-based Hangman game built in C — my second project as a self-taught dev.
 
